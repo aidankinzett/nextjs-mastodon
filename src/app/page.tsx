@@ -1,60 +1,31 @@
-export default async function Home() {
-  const res = await fetch("https://aidan.social/api/v1/timelines/public", {
-    cache: "no-store",
-  });
+"use client";
 
-  const data = await res.json();
+import { useState } from "react";
+
+export default function Home() {
+  const [server, setServer] = useState("aidan.social");
 
   return (
-    <main className="">
-      <div className="flex flex-col  items-center gap-6">
-        <div className="text-xl">Posts</div>
-        {data.map((toot: any) => (
-          <div className="border-2 rounded border-slate-400 p-4">
-            <h1 className="text-xl">{toot.account.display_name}</h1>
-            <div className="prose">
-              <div
-                dangerouslySetInnerHTML={{ __html: toot.content as string }}
-              />
-            </div>
-
-            {/* display attached images */}
-            {toot.media_attachments.map((attachment: any) => (
-              <div className="flex justify-center">
-                <img
-                  className="max-w-screen-sm"
-                  src={attachment.url}
-                  alt={attachment.description}
-                />
-              </div>
-            ))}
-
-            <div className="text-sm text-gray-500">
-              {new Date(toot.created_at).toLocaleString()}
-
-              <div className="flex gap-2">
-                <div className="flex gap-1">
-                  <div className="text-gray-500">👍</div>
-                  <div>{toot.favourites_count}</div>
-
-                  <div className="text-gray-500">🗨️</div>
-                  <div>{toot.replies_count}</div>
-
-                  <div className="text-gray-500">🔁</div>
-                  <div>{toot.reblogs_count}</div>
-
-                  <div className="text-gray-500">📌</div>
-                  <div>{toot.favourites_count}</div>
-
-                  <div className="text-gray-500">
-                    <a href={toot.uri}>🔗</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </main>
+    <div className="container mx-auto mt-10  flex flex-col items-center space-y-4">
+      <p className="text-xl">View Public Timeline</p>
+      <p>Enter server url</p>
+      <input
+        className="border-2 border-slate-400 rounded p-2"
+        type="text"
+        value={server}
+        onChange={(e) => setServer(e.target.value)}
+      />
+      <button
+      // make this look like a button
+        className="border-2 border-slate-400 rounded p-2 px-5s"
+        
+        
+        onClick={() => {
+          window.location.href = `/${server}/public/local`;
+        }}
+      >
+        Go
+      </button>
+    </div>
   );
 }
