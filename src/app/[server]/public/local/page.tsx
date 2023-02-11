@@ -1,11 +1,18 @@
+const getServerPosts = async (server: string) => {
+  const res = await fetch(`https://${server}/api/v1/timelines/public`, {
+    cache: "no-store",
+
+  });
+  const data = await res.json();
+  return data;
+};
+
 export default async function Local({
   params: { server },
 }: {
   params: { server: string };
 }) {
-  const res = await fetch(`https://${server}/api/v1/timelines/public`);
-
-  const data = await res.json();
+  const data = await getServerPosts(server);
 
   return (
     <main className="container max-w-screen-sm mx-auto">
