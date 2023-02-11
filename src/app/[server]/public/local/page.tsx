@@ -1,8 +1,10 @@
+import Image from "next/image";
+
 const getServerPosts = async (server: string) => {
   const res = await fetch(`https://${server}/api/v1/timelines/public`, {
     cache: "no-store",
-
   });
+
   const data = await res.json();
   return data;
 };
@@ -24,7 +26,7 @@ export default async function Local({
           {data.map((toot: any) => (
             <div className="p-4 border-b-2 flex flex-row items-start">
               <div className="w-12 m-2">
-                <img
+                <Image
                   className="w-12 h-12 rounded-full"
                   src={toot.account.avatar}
                   alt={toot.account.display_name}
