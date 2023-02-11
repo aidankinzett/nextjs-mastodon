@@ -10,54 +10,68 @@ export default async function Local({
   const data = await res.json();
 
   return (
-    <main className="">
-      <div className="flex flex-col  items-center gap-6">
-        <div className="text-xl">Posts</div>
-        {data.map((toot: any) => (
-          <div className="border-2 rounded border-slate-400 p-4">
-            <h1 className="text-xl">{toot.account.display_name}</h1>
-            <div className="prose">
-              <div
-                dangerouslySetInnerHTML={{ __html: toot.content as string }}
-              />
-            </div>
-
-            {/* display attached images */}
-            {toot.media_attachments.map((attachment: any) => (
-              <div className="flex justify-center">
+    <main className="container max-w-screen-sm mx-auto">
+      <div className="flex flex-col items-center gap-6 ">
+        <div className="text-xl w-full p-4 border-b-2 border-red-500 text-red-900 sticky top-0 bg-white">
+          Local Timeline
+        </div>
+        <div className="p-4 w-full">
+          {data.map((toot: any) => (
+            <div className="p-4 border-b-2 flex flex-row items-start">
+              <div className="w-12 m-2">
                 <img
-                  className="max-w-screen-sm"
-                  src={attachment.url}
-                  alt={attachment.description}
+                  className="w-12 h-12 rounded-full"
+                  src={toot.account.avatar}
+                  alt={toot.account.display_name}
                 />
               </div>
-            ))}
+              <div className="w-full">
+                <h1 className="text-xl">{toot.account.display_name}</h1>
 
-            <div className="text-sm text-gray-500">
-              {new Date(toot.created_at).toLocaleString()}
+                <div className="prose">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: toot.content as string }}
+                  />
+                </div>
 
-              <div className="flex gap-2">
-                <div className="flex gap-1">
-                  <div className="text-gray-500">👍</div>
-                  <div>{toot.favourites_count}</div>
+                {/* display attached images */}
+                {toot.media_attachments.map((attachment: any) => (
+                  <div className="flex justify-center">
+                    <img
+                      className="max-w-screen-sm"
+                      src={attachment.url}
+                      alt={attachment.description}
+                    />
+                  </div>
+                ))}
 
-                  <div className="text-gray-500">🗨️</div>
-                  <div>{toot.replies_count}</div>
+                <div className="text-sm text-gray-500">
+                  {new Date(toot.created_at).toLocaleString()}
 
-                  <div className="text-gray-500">🔁</div>
-                  <div>{toot.reblogs_count}</div>
+                  <div className="flex gap-2">
+                    <div className="flex gap-1">
+                      <div className="text-gray-500">👍</div>
+                      <div>{toot.favourites_count}</div>
 
-                  <div className="text-gray-500">📌</div>
-                  <div>{toot.favourites_count}</div>
+                      <div className="text-gray-500">🗨️</div>
+                      <div>{toot.replies_count}</div>
 
-                  <div className="text-gray-500">
-                    <a href={toot.uri}>🔗</a>
+                      <div className="text-gray-500">🔁</div>
+                      <div>{toot.reblogs_count}</div>
+
+                      <div className="text-gray-500">📌</div>
+                      <div>{toot.favourites_count}</div>
+
+                      <div className="text-gray-500">
+                        <a href={toot.uri}>🔗</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </main>
   );
