@@ -3,11 +3,7 @@ export default async function Local({
 }: {
   params: { server: string };
 }) {
-  const res = await fetch(`https://${server}/api/v1/timelines/public`, {
-    next: {
-      revalidate: 10,
-    },
-  });
+  const res = await fetch(`https://${server}/api/v1/timelines/public`);
 
   const data = await res.json();
 
